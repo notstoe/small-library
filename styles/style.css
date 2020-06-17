@@ -11,7 +11,7 @@ body header .pageTitle {
     width: auto;
     margin: 20px auto;
     text-align: center;
-    font-size: 4.5vw;
+    font-size: 43px;
 }
 
 body div.containerButtons {
@@ -25,7 +25,7 @@ body div.containerButtons button {
     padding: 0.4vw 1.6vw;
     color: black;
     background-color: var(--main-bg-color);
-    font-size: 1.8vw;
+    font-size: 23px;
     border-radius: 6px;
     cursor: pointer;
 }
@@ -40,34 +40,28 @@ body div.containerLibrary {
     
 }
 
-body div.containerLibrary .books { 
+body .containerLibrary div.books { 
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
     margin: 3vw auto;
 }
 
-body div.containerLibrary .books div.singleBookBckground {
-    padding: 3vh 1.4vw;
-    background-color: var(--main-element-color);
-    border-radius: 18px;
-    position: relative;
-    z-index: -1;
-    box-shadow: 3px 4.7px 5px black;
-    margin: 1vw 1vw;
-} 
-
-body .containerLibrary .books .singleBookBckground div.singleBook {
-    border-radius: 9px;
-    padding: 17vh 4.5vw;
+body .containerLibrary .books .singleBook {
+    margin: 1.6vh auto;
+    padding: 1.6vh 1vw;
+    width: 80vw;
+/*     height: 3.7vh; */
+    min-height: 3.7vh;
+    max-height: 10vh;
     background-color: var(--main-bg-color);
-    position: relative;
-    z-index: 1;
-    max-width: 4vw;
-    max-height: 3.3vh;
+    border-radius: 9px;
+    box-shadow: 2.2px 2px 5px black;
+    max-width: 80vw;
+    text-align: left;
+    line-height: 3.7vh;
 }
-
 
  body div.modal {
     display: none; 
@@ -86,10 +80,10 @@ body .containerLibrary .books .singleBookBckground div.singleBook {
     background-color: black;
     opacity: 93%;
     color: white;
-    margin: 7% auto; /* 15% from the top and centered */
+    margin: 7% auto;
     padding: 5vw 1vw;
     border-radius: 10px;
-    box-shadow: 2.5px 1px 3px black;
+    box-shadow: 2.5px 2px 3px black;
     width: 27%; /* Could be more or less, depending on screen size */
     height: 50%;
   }
@@ -110,27 +104,27 @@ body .containerLibrary .books .singleBookBckground div.singleBook {
     cursor: pointer;
   } 
 
-body form {
+body .modal .modal-content form {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     margin: -3.5vh auto;
 }
 
-body form input.inputStyle {
+body .modal .modal-content form input.inputStyle {
     margin: 2vh 0vw;
     width: 98%;
     height: 4vh;
     border-radius: 7px;
 }
 
-body form #readInput {
+body .modal .modal-content form #readInput {
     align-self: flex-start;
     margin: 3vh 0.2vw;
     transform: scale(1.1);
 }
 
-body form #submitBtn {
+body .modal .modal-content form #submitBtn {
     border: none;
     margin-top: 1.5vh;
     padding-top: 2vh;
@@ -141,12 +135,12 @@ body form #submitBtn {
     color: black;
 }
 
-body form #submitBtn:hover {
+body .modal .modal-content form #submitBtn:hover {
     background-color: white;
     cursor: pointer;
 }
 
-body form #submitBtn:active {
+body .modal .modal-content form #submitBtn:active {
     box-shadow: 1px 1px inset black;
     transform: scale(0.995);
 }

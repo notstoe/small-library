@@ -36,11 +36,11 @@ book.prototype.info = function() {
 
     if (this.read) {
 
-        return `${this.title}, by ${this.author}, it has ${this.pageNum} pages and it was already read.`;
+        return `${this.title} by ${this.author}. It has ${this.pageNum} pages and it was already read.`;
 
     } else {
   
-        return `${this.title}, by ${this.author}, it has ${this.pageNum} pages and it was not read yet.`;
+        return `${this.title} by ${this.author}. It has ${this.pageNum} pages and it was not read yet.`;
     }
 }
 
@@ -50,20 +50,15 @@ const nameoftheWind = new book('The Name of the Wind', 'Patrick Rothfuss', 1260,
 const hitchhikersGuide = new book('The Ultimate Hitchhiker\'s Guide to the Galaxy', 'Douglas Adams', 950, false);
 const howtobeImperfectionist = new book('How to be an Imperfectionist', 'Stephen Guise', 2590, true);
 
-const firstBookInfo = document.querySelector('.bookInfo');
-firstBookInfo.textContent = nameoftheWind.info();
-
-
-
 
 // ..:: MODAL SETTINGS
 
 const modal = document.querySelector('#myModal');
 
-const btnAdd = document.querySelector("#addBtn");
+const btnAdd = document.querySelector('#addBtn');
 
 // Get the <span> element that closes the modal
-const span = document.getElementsByClassName("close")[0];
+const span = document.querySelector('.close');
 
 btnAdd.onclick = function() {
   modal.style.display = "block";
