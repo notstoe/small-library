@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/reset.css">
+</head>
+
+<body>
+    <header>
+        <h1 class="pageTitle">Small Library</h1>
+    </header>
+
+    <div class="containerButtons">
+        <button id="addBtn">Add Book</button>
+        <button class="removeBtn">Remove Book</button>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+            <span class="close">&times;</span>
+
+            <form>
+                
+                <label for="TitleInput">Title of the Book:</label><br>
+                <input class="inputStyle" type="text" id="TitleInput" name="TitleInput"><br>
+
+                <label for="authorInput">Author:</label><br>
+                <input class="inputStyle" type="text" id="authorInput" name="authorInput"><br>
+                
+                <label for="pageNumInput">Number of Pages:</label><br>
+                <input class="inputStyle" type="text" id="pageNumInput" name="pageNumInput"><br>
+
+                <label for="readInput">Tick the box if you've already read it</label><br>
+                <input type="checkbox" id="readInput" name="readInput"><br>
+
+                <label for="submitBtn"></label><br>
+                <input type="submit" id="submitBtn" name="submitBtn" value="Submit"><br>
+
+            </form> 
+        </div>
+    </div>
+
+    <div class="containerLibrary">
+        <div class="books">
+            <div class="singleBookBckground">
+                <div class="singleBook" id="book1">
+                
+                    <h1 class="bookTitle">Title: </h1>
+                    <h2 class="bookAuthor">Author: </h2>
+                    <h2 class="pageNumb">Number of Pages: </h2>
+                    <h2 class="Read">Yes</h2>
+
+                </div>
+            </div>
+
+            <div class="singleBookBckground">
+                <div class="singleBook" id="book2">book2</div>
+            </div>
+
+            <div class="singleBookBckground">
+                <div class="singleBook" id="book3">book3</div>
+            </div>
+
+            <div class="singleBookBckground">
+                <div class="singleBook" id="book4">book4</div>
+            </div>
+
+            <div class="singleBookBckground">
+                <div class="singleBook" id="book5">book5</div>
+            </div>
+            <!-- 
+            <div class="singleBookBckground">
+                <div class="singleBook" id="book6">book6</div>
+            </div>
+
+            <div class="singleBookBckground">
+                <div class="singleBook" id="book7">book7</div>
+            </div>
+
+            <div class="singleBookBckground">
+                <div class="singleBook" id="book8">book8</div>
+            </div> -->
+
+        </div>
+    </div>
+
+
+    <script src="scripts/main.js"></script>
+</body>
+
+</html>
