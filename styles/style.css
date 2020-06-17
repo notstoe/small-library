@@ -52,7 +52,6 @@ body .containerLibrary .books .singleBook {
     margin: 1.6vh auto;
     padding: 1.6vh 1vw;
     width: 80vw;
-/*     height: 3.7vh; */
     min-height: 3.7vh;
     max-height: 10vh;
     background-color: var(--main-bg-color);
@@ -84,7 +83,7 @@ body .containerLibrary .books .singleBook {
     padding: 5vw 1vw;
     border-radius: 10px;
     box-shadow: 2.5px 2px 3px black;
-    width: 27%; /* Could be more or less, depending on screen size */
+    width: 27%; 
     height: 50%;
   }
   
