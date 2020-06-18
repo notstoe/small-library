@@ -17,33 +17,54 @@ function addToLibrary(bookObj) {
     const bookToAdd = document.createElement('div');
         bookToAdd.classList.add('singleBook');
         bookToAdd.setAttribute('id', `book${myLibrary.length - 1}`);
-        bookToAdd.setAttribute('data-attribute', `${bookObj.author}`);                              //to link with remove on myLibrary array
+        bookToAdd.setAttribute('data-attribute', `${bookObj.author}`);                              //attribute to link with remove on myLibrary array
         bookToAdd.textContent = bookObj.info();
         
-        const removeBtn = document.createElement('img');
-        removeBtn.setAttribute('src', 'images/trashcan.png');
-        removeBtn.setAttribute('alt', 'black trashcan');
-        removeBtn.setAttribute('id', `removeBtn${myLibrary.length - 1}`);
-        removeBtn.classList.add('removeBtn');
+        const removeBtn = document.createElement('img');                                            //creates delete button
+            removeBtn.setAttribute('src', 'images/trashcan.png');
+            removeBtn.setAttribute('alt', 'black trashcan');
+            removeBtn.setAttribute('id', `removeBtn${myLibrary.length - 1}`);
+            removeBtn.classList.add('removeBtn');
 
-        removeBtn.addEventListener('click', deleteBook);
-        
-        bookToAdd.appendChild(removeBtn);
-        libraryBooks.appendChild(bookToAdd);
-    }
+            removeBtn.addEventListener('click', deleteBook);
 
- function deleteBook(e){
+    bookToAdd.appendChild(removeBtn);
 
-    let refNumber = Number(e.target.id.replace('removeBtn',''));
+        const checkRead = document.createElement('input');                                           //creates read status checkbox
+        const checkReadLabel = document.createElement('label');
+            checkReadLabel.textContent = 'Read';
+            checkReadLabel.classList.add('checkReadLabel');
+
+            checkRead.setAttribute('type', 'checkbox');
+            checkRead.setAttribute('name', 'readInput');
+            checkRead.setAttribute('id', 'readInput');
+            checkRead.classList.add('checkRead');
+            checkRead.value = 'Read';
+            checkRead.checked = bookObj.read;
+
+            checkRead.addEventListener('change', updateStatusRead);
+
+    bookToAdd.appendChild(checkReadLabel);
+    bookToAdd.appendChild(checkRead);
+
+
+    libraryBooks.appendChild(bookToAdd);
+}
+
+function updateStatusRead(e) {
+                
+    let refNumberArr = myLibrary.findIndex(element => element.author === e.target.parentNode.getAttribute('data-attribute'));                     //finds the index for this book on MyLibrary array
+    myLibrary[refNumberArr].changeReadStatus();
+}
+
+function deleteBook(e){
     
     const libraryBooks = document.querySelector('.books');
-    const bookToDelete = document.querySelector(`#book${refNumber}`);
     
-    refNumberArr = myLibrary.findIndex(element => element.author === bookToDelete.getAttribute('data-attribute'));                     //finds the index for this book on MyLibrary array
-
+    refNumberArr = myLibrary.findIndex(element => element.author === e.target.parentNode.getAttribute('data-attribute'));                     //finds the index for this book on MyLibrary array
     myLibrary.splice(refNumberArr,1);
     
-    libraryBooks.removeChild(bookToDelete);
+    libraryBooks.removeChild(e.target.parentNode);
  }
 
 
@@ -58,20 +79,12 @@ function book(title, author, pageNum, read) {                                   
 
 book.prototype.info = function () {
 
-    if (this.read) {
-
-        return `${this.title} by ${this.author}. It has ${this.pageNum} pages and it was already read.`;
-
-    } else {
-
-        return `${this.title} by ${this.author}. It has ${this.pageNum} pages and it was not read yet.`;
-    }
+    return `${this.title} by ${this.author}. ${this.pageNum} pages.`;
 }
 
 book.prototype.changeReadStatus = function () {
 
-    this.read == true? this.read = false : this.read == true;
-
+    this.read? this.read = false : this.read = true;
 }
 
 
