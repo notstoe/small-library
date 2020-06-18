@@ -17,21 +17,34 @@ function addToLibrary(bookObj) {
     const bookToAdd = document.createElement('div');
         bookToAdd.classList.add('singleBook');
         bookToAdd.setAttribute('id', `book${myLibrary.length - 1}`);
+        bookToAdd.setAttribute('data-attribute', `${bookObj.author}`);                              //to link with remove on myLibrary array
         bookToAdd.textContent = bookObj.info();
+        
+        const removeBtn = document.createElement('img');
+        removeBtn.setAttribute('src', 'images/trashcan.png');
+        removeBtn.setAttribute('alt', 'black trashcan');
+        removeBtn.setAttribute('id', `removeBtn${myLibrary.length - 1}`);
+        removeBtn.classList.add('removeBtn');
+
+        removeBtn.addEventListener('click', deleteBook);
+        
+        bookToAdd.appendChild(removeBtn);
         libraryBooks.appendChild(bookToAdd);
-}
+    }
 
-// function renderLibrary(){                                                    //not working properly
+ function deleteBook(e){
 
-//     const oldBooks = document.querySelector('.singleBook');
-
-//     while (oldBooks.firstChild) {
-//         oldBooks.removeChild(oldBooks.lastChild);
-//     }
+    let refNumber = Number(e.target.id.replace('removeBtn',''));
     
-//     myLibrary.forEach(addToLibrary);
+    const libraryBooks = document.querySelector('.books');
+    const bookToDelete = document.querySelector(`#book${refNumber}`);
     
-// }
+    refNumberArr = myLibrary.findIndex(element => element.author === bookToDelete.getAttribute('data-attribute'));                     //finds the index for this book on MyLibrary array
+
+    myLibrary.splice(refNumberArr,1);
+    
+    libraryBooks.removeChild(bookToDelete);
+ }
 
 
 function book(title, author, pageNum, read) {                                               //constructor
@@ -60,10 +73,6 @@ book.prototype.changeReadStatus = function () {
     this.read == true? this.read = false : this.read == true;
 
 }
-
-// const removeBtn = document.querySelector('#removeBtn');                             //testing render function
-// removeBtn.addEventListener('click', renderLibrary);
-
 
 
 // .. :: FORM HANDLING
