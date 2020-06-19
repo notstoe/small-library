@@ -1,6 +1,6 @@
-let myLibrary = [];
-let bookInfo = [];                                                          //array with books title, author, numpages and read status
+// ..:: GLOBAL VARIABLES
 
+let myLibrary = [];
 let storage = window.localStorage;
 
 // ..:: MAIN FUNCTIONS
@@ -10,28 +10,28 @@ function createBook(bookInfoArr) {                                          //ar
                                                                             
     if (bookInfoArr[3] === 'true') bookInfoArr[3] = true;
     if (bookInfoArr[3] === 'false') bookInfoArr[3] = false;
-
+    
     let brandNewBook = new book(bookInfoArr[0], bookInfoArr[1], bookInfoArr[2], bookInfoArr[3]);
     bookInfo = [];
     return brandNewBook;
 }
 
 function addToLibrary(bookObj) {
-
+    
     const libraryBooks = document.querySelector('.books');
-
+    
     const bookToAdd = document.createElement('div');
-        bookToAdd.classList.add('singleBook');
+    bookToAdd.classList.add('singleBook');
         bookToAdd.setAttribute('id', `book${myLibrary.length - 1}`);
         bookToAdd.setAttribute('data-attribute', `${bookObj.author}`);                              //attribute to link with remove on myLibrary array
         bookToAdd.textContent = bookObj.info();
         
         const removeBtn = document.createElement('img');                                            //creates delete button
-            removeBtn.setAttribute('src', 'images/trashcan.png');
+        removeBtn.setAttribute('src', 'images/trashcan.png');
             removeBtn.setAttribute('alt', 'black trashcan');
             removeBtn.setAttribute('id', `removeBtn${myLibrary.length - 1}`);
             removeBtn.classList.add('removeBtn');
-
+            
             removeBtn.addEventListener('click', deleteBook);
 
     bookToAdd.appendChild(removeBtn);
@@ -49,16 +49,16 @@ function addToLibrary(bookObj) {
             checkRead.checked = bookObj.read;
 
             checkRead.addEventListener('change', updateStatusRead);
-
+            
     bookToAdd.appendChild(checkReadLabel);
     bookToAdd.appendChild(checkRead);
 
-
+    
     libraryBooks.appendChild(bookToAdd);
 }
 
 function updateStatusRead(e) {
-                
+    
     let refNumberArr = myLibrary.findIndex(element => element.author === e.target.parentNode.getAttribute('data-attribute'));                     //finds the index for this book on MyLibrary array
     myLibrary[refNumberArr].changeReadStatus();
 }
@@ -71,17 +71,17 @@ function deleteBook(e){
     myLibrary.splice(refNumberArr,1);
     
     libraryBooks.removeChild(e.target.parentNode);
- }
+}
 
-// .. :: BOOK OBJECT CONSTRUCTOR
+// .. :: BOOK OBJECT CONSTRUCTOR AND FUNCTIONS
 
 function book(title, author, pageNum, read) {                                               //constructor
-
+    
     this.title = title
     this.author = author
     this.pageNum = pageNum
     this.read = read
-
+    
 }
 
 book.prototype.info = function () {
@@ -90,64 +90,69 @@ book.prototype.info = function () {
 }
 
 book.prototype.changeReadStatus = function () {
-
+    
     this.read? this.read = false : this.read = true;
 }
 
 // .. :: LOCAL STORAGE HANDLING
 
-    window.addEventListener('unload', () => {                                           //saving books on local storage as string
-        let allBooksValue;
-        let allBooksKey;
+window.addEventListener('unload',saveLibrary);
+
+function saveLibrary() {                                           //saving books on local storage as string
+
+    let allBooksValue;
+    let allBooksKey;
+    
+    myLibrary.forEach((bookElement, index) => {
         
-        myLibrary.forEach((bookElement, index) => {
-            
-            allBooksValue = bookElement.title + ',' + bookElement.author + ',' + bookElement.pageNum + ',' + bookElement.read;
-            allBooksKey = `book${index}`;
-
-            storage.setItem(allBooksKey, allBooksValue);
-        }); 
-    });
-
-    window.addEventListener('load', renderLibrary);
-
-    function renderLibrary() {
+        allBooksValue = bookElement.title + ',' + bookElement.author + ',' + bookElement.pageNum + ',' + bookElement.read;
+        allBooksKey = `book${index}`;
         
-        let storagedBooks = [];
-        let tempBookInfo = [];
+        storage.setItem(allBooksKey, allBooksValue);
+    }); 
+}
 
-        for (let i = 0; i < storage.length; i++) {
+window.addEventListener('load', renderLibrary);
+
+function renderLibrary() {
+    
+    let storagedBooks = [];
+    let tempBookInfo = [];
+    
+    for (let i = 0; i < storage.length; i++) {
             storagedBooks.push(storage.getItem(`book${i}`));
         }
         
         storagedBooks.forEach((storagedBook) => {
-
+            
             tempBookInfo = storagedBook.split(',');
-            myLibrary.push(createBook(tempBookInfo));
-            console.log(myLibrary);                                           
+            myLibrary.push(createBook(tempBookInfo));                                          
             addToLibrary(myLibrary[myLibrary.length-1]); 
 
         });
-
+        
         storage.clear();
     }
-
-
-// .. :: FORM HANDLING
-
-const form = document.querySelector('form');
-
-function handleFormData() {                                                                //gets form Data, adds new book and resets form
     
-    const elements = document.querySelectorAll('input');
-    elements.forEach(element => {
-
-        if (element.id === 'readInput'){
-            bookInfo.push(element.checked);
+    
+    // .. :: FORM HANDLING
+    
+    const form = document.querySelector('form');
+    
+    function handleFormData() {                                                                //gets form Data, adds new book and resets form
+        
+        let bookInfo = [];                                                                     //array with books title, author, numpages and read status
+        
+        
+        const elements = document.querySelectorAll('input');
+        elements.forEach(element => {
+            
+            if (element.id === 'readInput'){
+                bookInfo.push(element.checked);
         } else {
             bookInfo.push(element.value);
         }
-
+        
     });
     
     myLibrary.push(createBook(bookInfo));                                           
