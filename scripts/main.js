@@ -1,14 +1,20 @@
 let myLibrary = [];
 let bookInfo = [];                                                          //array with books title, author, numpages and read status
 
+let storage = window.localStorage;
+
+// ..:: MAIN FUNCTIONS
+
 function createBook(bookInfoArr) {                                          //array with book info: title[0], author[1], pagenum[2], readInput[3]
                                                                             //creates new book object and clears the Arr
+                                                                            
+    if (bookInfoArr[3] === 'true') bookInfoArr[3] = true;
+    if (bookInfoArr[3] === 'false') bookInfoArr[3] = false;
 
     let brandNewBook = new book(bookInfoArr[0], bookInfoArr[1], bookInfoArr[2], bookInfoArr[3]);
     bookInfo = [];
     return brandNewBook;
 }
-
 
 function addToLibrary(bookObj) {
 
@@ -67,6 +73,7 @@ function deleteBook(e){
     libraryBooks.removeChild(e.target.parentNode);
  }
 
+// .. :: BOOK OBJECT CONSTRUCTOR
 
 function book(title, author, pageNum, read) {                                               //constructor
 
@@ -79,7 +86,7 @@ function book(title, author, pageNum, read) {                                   
 
 book.prototype.info = function () {
 
-    return `${this.title} by ${this.author}. ${this.pageNum} pages.`;
+    return `${this.title} by ${this.author}. ${this.pageNum} pages`;
 }
 
 book.prototype.changeReadStatus = function () {
@@ -87,12 +94,50 @@ book.prototype.changeReadStatus = function () {
     this.read? this.read = false : this.read = true;
 }
 
+// .. :: LOCAL STORAGE HANDLING
+
+    window.addEventListener('unload', () => {                                           //saving books on local storage as string
+        let allBooksValue;
+        let allBooksKey;
+        
+        myLibrary.forEach((bookElement, index) => {
+            
+            allBooksValue = bookElement.title + ',' + bookElement.author + ',' + bookElement.pageNum + ',' + bookElement.read;
+            allBooksKey = `book${index}`;
+
+            storage.setItem(allBooksKey, allBooksValue);
+        }); 
+    });
+
+    window.addEventListener('load', renderLibrary);
+
+    function renderLibrary() {
+        
+        let storagedBooks = [];
+        let tempBookInfo = [];
+
+        for (let i = 0; i < storage.length; i++) {
+            storagedBooks.push(storage.getItem(`book${i}`));
+        }
+        
+        storagedBooks.forEach((storagedBook) => {
+
+            tempBookInfo = storagedBook.split(',');
+            myLibrary.push(createBook(tempBookInfo));
+            console.log(myLibrary);                                           
+            addToLibrary(myLibrary[myLibrary.length-1]); 
+
+        });
+
+        storage.clear();
+    }
+
 
 // .. :: FORM HANDLING
 
 const form = document.querySelector('form');
 
-function getFormData() {                                                                //gets form Data, adds new book and resets form
+function handleFormData() {                                                                //gets form Data, adds new book and resets form
     
     const elements = document.querySelectorAll('input');
     elements.forEach(element => {
@@ -105,7 +150,7 @@ function getFormData() {                                                        
 
     });
     
-    myLibrary.push(createBook(bookInfo));                                               //only stores on the array if it was added through the form (to avoid adding duplicates when calling renderLibrary)
+    myLibrary.push(createBook(bookInfo));                                           
     addToLibrary(myLibrary[myLibrary.length-1]);   
     
     elements.forEach(resetForm); 
@@ -128,7 +173,7 @@ function resetForm(element) {
 
 form.addEventListener("submit", function (e) {
     e.preventDefault();
-    getFormData();
+    handleFormData();
 });
 
 // ..:: MODAL SETTINGS
