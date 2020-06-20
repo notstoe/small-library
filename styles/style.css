@@ -104,11 +104,11 @@ body .containerLibrary .books label.checkReadLabel {
     opacity: 93%;
     color: white;
     margin: 7% auto;
-    padding: 5vw 1vw;
+    padding: 5.9vw 1vw;
     border-radius: 10px;
     box-shadow: 2.5px 2px 3px black;
-    width: 27%; 
-    height: 50%;
+    width: 32%; 
+    height: 57%;
   }
   
   /* The Close Button */
