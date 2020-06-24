@@ -3,6 +3,11 @@
 let myLibrary = [];
 let storage = window.localStorage;
 
+// ..:: HEADER HELP
+
+const help = document.querySelector('#help');
+help.addEventListener('click', () => alert('Add a book to get started and you\'re all set! \n\nUse it as your personal library!'));
+
 // ..:: MAIN FUNCTIONS
 
 function createBook(bookInfoArr) {                                          //array with book info: title[0], author[1], pagenum[2], readInput[3]
@@ -135,29 +140,29 @@ function renderLibrary() {
     }
     
     
-    // .. :: FORM HANDLING
+// .. :: FORM HANDLING
     
-    const form = document.querySelector('form');
+const form = document.querySelector('form');
+
+function handleFormData() {                                                                //gets form Data, adds new book and resets form
     
-    function handleFormData() {                                                                //gets form Data, adds new book and resets form
+    let bookInfo = [];                                                                     //array with book's title, author, numpages and read status
+    
+    
+    const elements = document.querySelectorAll('input');
+    elements.forEach(element => {
         
-        let bookInfo = [];                                                                     //array with books title, author, numpages and read status
-        
-        
-        const elements = document.querySelectorAll('input');
-        elements.forEach(element => {
-            
-            if (element.id === 'readInput'){
-                bookInfo.push(element.checked);
+        if (element.id === 'readInput'){
+            bookInfo.push(element.checked);
         } else {
             bookInfo.push(element.value);
         }
-        
-    });
     
+    });
+
     myLibrary.push(createBook(bookInfo));                                           
     addToLibrary(myLibrary[myLibrary.length-1]);   
-    
+
     elements.forEach(resetForm); 
 }
 
@@ -169,6 +174,10 @@ function resetForm(element) {
     } else if (element.id === 'submitBtn') {
         
         element.value = 'Submit';
+        
+    } else if (element.id === 'pageNumInput') {
+        
+        element.value = 0;
         
     } else {
         
