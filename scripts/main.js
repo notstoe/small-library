@@ -214,3 +214,15 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
+
+submitBtn.addEventListener('click', () => {
+    const inputs = document.querySelectorAll('.inputStyle');
+    
+    inputs.forEach((input) => {
+        if(input.validity.valueMissing){
+            input.setCustomValidity('This field is required');
+        } else {
+            input.setCustomValidity('');
+        }
+    });
+});
